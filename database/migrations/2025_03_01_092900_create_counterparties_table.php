@@ -13,7 +13,14 @@ return new class extends Migration
     {
         Schema::create('counterparties', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->string('inn')->index();
+            $table->string('name')->nullable();
+            $table->string('ogrn')->nullable();
+            $table->text('address')->nullable();
             $table->timestamps();
+
+            $table->unique(['user_id', 'inn']);
         });
     }
 
