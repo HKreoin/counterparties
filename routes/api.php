@@ -9,7 +9,8 @@ Route::post('/v1/register', [AuthController::class, 'register']);
 Route::post('/v1/login', [AuthController::class, 'login']);
 
 // Protected routes
-Route::middleware('auth:sanctum')->group(function () {
-    Route::apiResource('v1/counterparties', CounterpartyController::class)
+Route::middleware('auth:sanctum')->prefix('v1')->group(function () {
+    Route::apiResource('counterparties', CounterpartyController::class)
         ->only(['index', 'store']);
+    Route::post('logout', [AuthController::class, 'logout']);
 });
