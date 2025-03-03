@@ -28,7 +28,7 @@ test('user can create counterparty', function () {
 
     $response = $this->withHeaders([
         'Authorization' => 'Bearer ' . $this->token,
-    ])->postJson('/api/counterparties', [
+    ])->postJson('/api/v1/counterparties', [
         'inn' => '7707083893',
     ]);
 
@@ -56,7 +56,7 @@ test('user can get counterparties', function () {
 
     $response = $this->withHeaders([
         'Authorization' => 'Bearer ' . $this->token,
-    ])->getJson('/api/counterparties');
+    ])->getJson('/api/v1/counterparties');
 
     $response->assertStatus(200)
         ->assertJsonCount(1)
@@ -66,6 +66,6 @@ test('user can get counterparties', function () {
 });
 
 test('unauthorized user cannot access counterparties', function () {
-    $response = $this->getJson('/api/counterparties');
+    $response = $this->getJson('/api/v1/counterparties');
     $response->assertStatus(401);
 });
