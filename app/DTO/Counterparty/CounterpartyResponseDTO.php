@@ -8,7 +8,7 @@ class CounterpartyResponseDTO extends Data
 {
     public function __construct(
         public int    $id,
-        public string $inn,
+        public int $inn,
         public string $name,
         public string $ogrn,
         public string $address,
