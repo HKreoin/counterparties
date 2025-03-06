@@ -23,14 +23,13 @@ class AuthController extends Controller
      *     @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(
-     *             required={"name", "email", "password", "password_confirmation"},
+     *             required={"name", "email", "password"},
      *             @OA\Property(property="name", type="string", example="Username123"),
      *             @OA\Property(property="firstname", type="string", example="John"),
      *             @OA\Property(property="lastname", type="string", example="Doe"),
      *             @OA\Property(property="patronymic", type="string", example="Milkovich"),
      *             @OA\Property(property="email", type="string", format="email", example="john@example.com"),
      *             @OA\Property(property="password", type="string", format="password", example="password123"),
-     *             @OA\Property(property="password_confirmation", type="string", format="password", example="password123"),
      *         )
      *     ),
      *     @OA\Response(
@@ -55,11 +54,7 @@ class AuthController extends Controller
      */
     public function register(RegisterUserDTO $data): JsonResponse
     {
-        $user = User::create([
-            'name' => $data->name,
-            'email' => $data->email,
-            'password' => Hash::make($data->password),
-        ]);
+        $user = User::create($data->toArray());
 
         $token = $user->createToken('auth_token')->plainTextToken;
 
