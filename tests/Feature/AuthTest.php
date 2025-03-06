@@ -9,8 +9,7 @@ test('user can register', function () {
     $response = $this->postJson('/api/v1/register', [
         'name' => 'Test User',
         'email' => 'test@example.com',
-        'password' => 'password',
-        'password_confirmation' => 'password',
+        'password' => 'password'
     ]);
 
     $response->assertStatus(201)
