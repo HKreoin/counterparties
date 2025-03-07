@@ -27,17 +27,22 @@ const props = defineProps({
     searchTerm: String
 })
 
-const search = ref(props.searchTerm)
+let search = ref(props.searchTerm);
 
 watch(
     search,
-    debounce(q => Inertia.get(route('counterparties.index'), {search: q}, {preserveState: true}), 500),
+    debounce(q => {
+        Inertia.get(route('counterparties.index'),
+            { search: q, page: props.counterparties?.current_page || 1 },
+            { preserveState: true })
+    }, 300),
 )
+
 </script>
 
 <template>
     <div
-        v-if="_.isEmpty(counterparties)"
+        v-if="_.isEmpty(counterparties['data'])"
         class="flex h-screen items-center"
     >
         <div class="text-center mx-auto">
@@ -56,11 +61,11 @@ watch(
     </div>
     <div
         v-else
-        class="w-9/12 items-center "
+        class="w-full items-center p-12"
     >
         <div class="flex h-full items-center justify-between w-full">
-            <CardTitle class="text-2xl">Добавленные контрагенты</CardTitle>
-            <div class="pt-4">
+            <CardTitle class="text-2xl content-around">Добавленные контрагенты</CardTitle>
+            <div>
                 <a :href="route('counterparties.create')">
                     <Button>
                         Добавить
@@ -69,11 +74,10 @@ watch(
             </div>
         </div>
         <Combobox by="label">
-            <ComboboxAnchor class="w-full mt-4">
+            <ComboboxAnchor class="w-full mt-6">
                 <div class="relative items-center">
                     <ComboboxInput
                         class="pl-9"
-                        :display-value="(val) => val?.label ?? ''"
                         v-model="search"
                         placeholder="Поиск по ИНН / наименованию"
                     />
