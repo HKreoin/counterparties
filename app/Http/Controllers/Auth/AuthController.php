@@ -10,6 +10,7 @@ use App\Services\AuthService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -37,15 +38,15 @@ class AuthController extends Controller
 
     public function login(LoginUserDTO $data, Request $request): RedirectResponse
     {
-        if (Auth::attempt((array)$data, $request->remember)) {
+        if (Auth::attempt($data->toArray(), $request->remember)) {
             $request->session()->regenerate();
 
-            return redirect()->intended('counterparties.index');
+            return redirect()->route('counterparties.index')->with('success', 'Вы успешно вошли в учетную запись');
+        }else {
+            throw ValidationException::withMessages([
+                'email' => trans('auth.failed'),
+            ]);
         }
-
-        return back()->withErrors([
-            'email' => 'Такой адрес электронной почты не зарегестрирован',
-        ])->onlyInput('email');
     }
 
     public function logout(Request $request): RedirectResponse
