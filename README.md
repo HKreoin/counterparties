@@ -4,19 +4,19 @@
 
 Скопируйте репозиторий
 
-```
+```bash
 git clone git@github.com:HKreoin/counterparties.git
 ```
 
 Перейдите в папку counterparties
 
-```
+```bash
 cd counterparties
 ```
 
 Скопируйте файл .env.example и переименуйте в .env
 
-```
+```bash
 cp .env.example .env
 ```
 
@@ -24,4 +24,19 @@ cp .env.example .env
 
 ```
 DADATA_API_KEY=ваш ключ API
+```
+
+Для создания пользователя и контрагентов
+```bash
+php artisan migrate --seed
+```
+Данные для входа 
+
+email: test@example.com
+
+password: password
+
+либо можете зарегистрировать своего и использовать комманду для создания списка контрагентов
+```bash
+php artisan db:seed --class=CounterpartySeeder
 ```
