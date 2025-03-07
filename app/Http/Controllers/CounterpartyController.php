@@ -26,9 +26,7 @@ class CounterpartyController extends Controller
         $query->where('inn', 'like',  '%' . $request->search . '%')
             ->orWhere('name', 'like', '%' . $request->search . '%')
             ->orWhere('ogrn', 'like', '%' . $request->search . '%');
-        })->paginate(5)->withQueryString()->map(function (Counterparty $counterparty) {
-            return CounterpartyResponseDTO::from($counterparty);
-        });
+        })->paginate(5)->withQueryString();
         $searchTerm = $request->search;
         return Inertia::render('Counterparty/Index', compact('counterparties', 'searchTerm'));
     }
