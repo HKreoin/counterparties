@@ -41,8 +41,11 @@ const submit = () => {
                             placeholder="example@einzelwerk.ru"
                             required
                             v-model="form.email"
-                            :message="form.errors.email"
                         />
+                        <small
+                            class="text-destructive"
+                            v-if="form.errors.email"
+                        >{{ form.errors.email }}</small>
                     </div>
                     <div class="grid gap-2">
                         <div class="flex items-center">
@@ -53,8 +56,11 @@ const submit = () => {
                             type="password"
                             required
                             v-model="form.password"
-                            :message="form.errors.password"
                         />
+                        <small
+                            class="text-destructive"
+                            v-if="form.errors.password"
+                        >{{ form.errors.password }}</small>
                     </div>
                     <Button
                         class="w-full"
