@@ -12,7 +12,7 @@
   <div v-if="$page.props.flash.error">
     <p class="p-4 bg-red-200">{{ $page.props.flash.error }}</p>
   </div>
-    <div class="flex h-screen items-center justify-center bg-primary-foreground">
+    <div class="flex h-screen items-start justify-center bg-primary-foreground">
         <slot />
     </div>
 </template>
