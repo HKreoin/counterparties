@@ -1,9 +1,26 @@
 <script setup>
-import {router} from "@inertiajs/inertia-vue3";
+import {
+    Table,
+    TableBody,
+    TableCell,
+    TableHead,
+    TableHeader,
+    TableRow,
+} from '@/components/ui/table';
+import {
+    Combobox,
+    ComboboxAnchor,
+    ComboboxInput,
+} from '@/components/ui/combobox';
+
 import {ref, watch} from 'vue';
 import {debounce} from 'lodash';
 import {Button} from '@/components/ui/button/index.js';
-import * as _ from 'lodash-es';
+import * as _ from 'lodash';
+import {CardTitle} from "@/components/ui/card/index.js";
+import {Search} from 'lucide-vue-next';
+import PaginationLinks from "@/components/PaginationLinks.vue";
+import {Inertia} from "@inertiajs/inertia";
 
 const props = defineProps({
     counterparties: Object,
@@ -14,7 +31,7 @@ const search = ref(props.searchTerm)
 
 watch(
     search,
-    debounce(q => router.get(route('counterparty.index'), {search: q}, {preserveState: true}), 500),
+    debounce(q => Inertia.get(route('counterparties.index'), {search: q}, {preserveState: true}), 500),
 )
 </script>
 
@@ -37,11 +54,69 @@ watch(
             </div>
         </div>
     </div>
-    <div v-else class="flex h-screen items-center">
-        <div v-for="counterparty in counterparties" :key="counterparty.id">
-            {{ counterparty.name }}
-            {{ counterparty.inn}}
-            {{ counterparty.ogrn }}
+    <div
+        v-else
+        class="w-9/12 items-center "
+    >
+        <div class="flex h-full items-center justify-between w-full">
+            <CardTitle class="text-2xl">Добавленные контрагенты</CardTitle>
+            <div class="pt-4">
+                <a :href="route('counterparties.create')">
+                    <Button>
+                        Добавить
+                    </Button>
+                </a>
+            </div>
+        </div>
+        <Combobox by="label">
+            <ComboboxAnchor class="w-full mt-4">
+                <div class="relative items-center">
+                    <ComboboxInput
+                        class="pl-9"
+                        :display-value="(val) => val?.label ?? ''"
+                        v-model="search"
+                        placeholder="Поиск по ИНН / наименованию"
+                    />
+                    <span class="absolute start-0 inset-y-0 flex items-center justify-center px-3">
+          <Search class="size-4 text-muted-foreground" />
+        </span>
+                </div>
+            </ComboboxAnchor>
+        </Combobox>
+        <div class="rounded-md border mt-4">
+            <Table>
+                <TableHeader>
+                    <TableRow class="grid grid-cols-4">
+                        <TableHead class="content-around">
+                            ИНН
+                        </TableHead>
+                        <TableHead class="content-around">
+                            Наименование
+                        </TableHead>
+                        <TableHead class="content-around">
+                            ОГРН
+                        </TableHead>
+                        <TableHead class="content-around">
+                            Адрес
+                        </TableHead>
+                    </TableRow>
+                </TableHeader>
+                <TableBody>
+                    <TableRow
+                        v-for="counterparty in counterparties.data"
+                        :key="counterparty.id"
+                        class="grid grid-cols-4 "
+                    >
+                        <TableCell>{{ counterparty.inn }}</TableCell>
+                        <TableCell>{{ counterparty.name }}</TableCell>
+                        <TableCell>{{ counterparty.ogrn }}</TableCell>
+                        <TableCell>{{ counterparty.address }}</TableCell>
+                    </TableRow>
+                </TableBody>
+            </Table>
+        </div>
+        <div class="flex justify-center w-full mt-4">
+            <PaginationLinks :pagination="counterparties"></PaginationLinks>
         </div>
     </div>
 </template>
