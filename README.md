@@ -28,6 +28,12 @@ DADATA_API_KEY=ваш ключ API
 
 ## Запуск Docker
 
+Установите утилиту make если она у вас не установлена
+
+```bash
+apt install make
+```
+
 ```bash
 make docker-start
 ```
