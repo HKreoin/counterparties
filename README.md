@@ -5,7 +5,7 @@
 Скопируйте репозиторий
 
 ```bash
-git clone git@github.com:HKreoin/counterparties.git
+git clone https://github.com/HKreoin/counterparties.git
 ```
 
 Перейдите в папку counterparties
