@@ -28,26 +28,14 @@ DADATA_API_KEY=ваш ключ API
 
 ## Запуск Docker
 
-```
-docker-compose up -d
-```
-
-Создаем ключ приложения
-
-```
-docker-compose exec app php artisan key:generate
+```bash
+make docker-start
 ```
 
-Собираем фронтенд
-
-```
-docker-compose exec app npm run build
-```
-
-Для создания пользователя и контрагентов
+После запуска контейнеров для настройки приложения введите
 
 ```bash
-docker-compose exec app php artisan migrate --seed
+make docker-setup
 ```
 
 Данные для входа
@@ -55,9 +43,3 @@ docker-compose exec app php artisan migrate --seed
 email: test@example.com
 
 password: password
-
-либо можете зарегистрировать своего и использовать комманду для создания списка контрагентов
-
-```bash
-docker-compose exec app php artisan db:seed --class=CounterpartySeeder
-```
