@@ -1,49 +1,49 @@
 services:
-    #PHP Service
-    backend:
-        build:
-            dockerfile: Dockerfile-backend
-        container_name: backend
-        restart: unless-stopped
-        tty: true
-        environment:
-            SERVICE_NAME: backend
-            SERVICE_TAGS: dev
-        working_dir: /var/www/html/
-        volumes:
-            - ./backend/:/var/www/html/
-            - ./backend/php/laravel.ini:/usr/local/etc/php/conf.d/laravel.ini
-        networks:
-            - app-network
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: laravel_app
+    restart: unless-stopped
+    volumes:
+      - ./:/var/www
+      - ./docker/php/local.ini:/usr/local/etc/php/conf.d/local.ini
+    networks:
+      - app-network
 
-    frontend:
-        stdin_open: true
-        container_name: frontend
-        build:
-            dockerfile: Dockerfile-frontend
-        volumes:
-            - /app/node_modules
-            - ./frontend:/var/www/html/
-        networks:
-            - app-network
+  nginx:
+    build:
+      context: .
+      dockerfile: nginx.Dockerfile
+    container_name: laravel_nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    volumes:
+      - ./:/var/www
+    depends_on:
+      - app
+    networks:
+      - app-network
 
-    #Nginx Service
-    webserver:
-        depends_on:
-            - backend
-            - frontend
-        build:
-            context: nginx
-            dockerfile: Dockerfile
-        container_name: webserver
-        restart: unless-stopped
-        tty: true
-        ports:
-            - "80:80"
-        networks:
-            - app-network
+  db:
+    image: mysql:8.0
+    container_name: laravel_db
+    restart: unless-stopped
+    environment:
+        MYSQL_DATABASE: ${DB_DATABASE}
+        MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+        MYSQL_PASSWORD: ${DB_PASSWORD}
+        MYSQL_USER: ${DB_USERNAME}
+    volumes:
+      - dbdata:/var/lib/mysql
+    networks:
+      - app-network
 
-#Docker Networks
 networks:
-    app-network:
-        driver: bridge
+  app-network:
+    driver: bridge
+
+volumes:
+  dbdata:
+    driver: local
