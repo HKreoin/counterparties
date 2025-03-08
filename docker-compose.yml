@@ -22,6 +22,8 @@ services:
       - "443:443"
     volumes:
       - ./:/var/www
+      - nginx_conf:/etc/nginx/conf.d
+      - certbot_certs:/etc/letsencrypt
     depends_on:
       - app
     networks:
@@ -47,4 +49,8 @@ networks:
 
 volumes:
   dbdata:
+    driver: local
+  nginx_conf:
+    driver: local
+  certbot_certs:
     driver: local
