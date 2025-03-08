@@ -24,12 +24,6 @@ WORKDIR /var/www
 # Копирование кода приложения
 COPY . /var/www
 
-# Установка PHP зависимостей
-RUN composer install --optimize-autoloader --no-interaction --no-progress
-
-# Установка зависимостей Node.js и сборка фронтенда
-RUN npm install && npm run build
-
 # Настройка прав доступа
 RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
 
