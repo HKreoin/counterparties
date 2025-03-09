@@ -1,4 +1,4 @@
-FROM php:8.2-fpm
+FROM php:8.3-fpm
 
 # Установка зависимостей
 RUN apt-get update && apt-get install -y \
@@ -18,6 +18,10 @@ RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
 # Установка Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
+# Установка зависимостей
+RUN composer install \
+    npm install
+
 # Установка рабочего каталога
 WORKDIR /var/www
 
@@ -25,7 +29,8 @@ WORKDIR /var/www
 COPY . /var/www
 
 # Настройка прав доступа
-RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
+RUN mkdir -p /var/www/storage /var/www/bootstrap/cache && \
+    chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
 
 EXPOSE 9000
 CMD ["php-fpm"]
