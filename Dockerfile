@@ -18,15 +18,15 @@ RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
 # Установка Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Установка зависимостей
-RUN composer install \
-    npm install
-
 # Установка рабочего каталога
 WORKDIR /var/www
 
 # Копирование кода приложения
 COPY . /var/www
+
+# Установка зависимостей с помощью Composer и npm
+RUN composer install && \
+    npm install
 
 # Настройка прав доступа
 RUN mkdir -p /var/www/storage /var/www/bootstrap/cache && \

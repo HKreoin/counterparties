@@ -41,7 +41,8 @@ make docker-start
 После запуска контейнеров для настройки приложения введите
 
 ```bash
-make docker-setup
+make app-setup
+make vite-build
 ```
 
 Данные для входа
