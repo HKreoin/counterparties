@@ -22,7 +22,7 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 WORKDIR /var/www
 
 # Копирование кода приложения
-COPY . /var/www
+COPY . .
 
 # Установка зависимостей с помощью Composer и npm
 RUN composer install && \
