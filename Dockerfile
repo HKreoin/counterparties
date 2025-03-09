@@ -1,5 +1,9 @@
 FROM php:8.3-fpm
 
+# Копируем файлы зависимостей
+COPY composer.lock composer.json /var/www/
+# Установка рабочего каталога
+WORKDIR /var/www
 # Установка зависимостей
 RUN apt-get update && apt-get install -y \
     git \
@@ -16,13 +20,16 @@ RUN apt-get update && apt-get install -y \
 RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
 
 # Установка Composer
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
-
-# Установка рабочего каталога
-WORKDIR /var/www
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 # Копирование кода приложения
-COPY . .
+COPY . /var/www
+# Установка прав
+RUN chown -R www-data:www-data \
+    /var/www/html/storage \
+    /var/www/html/bootstrap/cache
+# Установка зависимостей
+RUN composer install && npm install
 
 EXPOSE 9000
 CMD ["php-fpm"]
