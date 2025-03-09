@@ -26,8 +26,8 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 COPY . /var/www
 # Установка прав
 RUN chown -R www-data:www-data \
-    /var/www/html/storage \
-    /var/www/html/bootstrap/cache
+    /var/www/storage \
+    /var/www/bootstrap/cache
 # Установка зависимостей
 RUN composer install && npm install
 
