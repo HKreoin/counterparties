@@ -184,13 +184,13 @@
                 }
             }
         },
-        "/logout": {
+        "/api/v1/logout": {
             "post": {
                 "tags": [
-                    "Authentication"
+                    "Auth"
                 ],
                 "summary": "Logout user and invalidate token",
-                "operationId": "4a7ae4e1c54bbc1ea1dbceb4adbc49e4",
+                "operationId": "4f953f79b68161bb5120e6f95126c000",
                 "responses": {
                     "200": {
                         "description": "Logout successful",
@@ -419,10 +419,6 @@
         {
             "name": "Auth",
             "description": "Auth"
-        },
-        {
-            "name": "Authentication",
-            "description": "Authentication"
         },
         {
             "name": "Counterparties",

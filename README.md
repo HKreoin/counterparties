@@ -4,6 +4,10 @@
 
 https://khabdev.site/
 
+## Документация Open API
+
+https://khabdev.site/api/documentation#/Counterparties
+
 Данные для входа
 
 email: test@example.com
@@ -53,6 +57,7 @@ make docker-start
 ```bash
 make app-setup
 make vite-build
+make update-nginx-conf
 ```
 
 Данные для входа

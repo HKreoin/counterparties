@@ -114,9 +114,9 @@ class AuthController extends Controller
 
     /**
      * @OA\Post(
-     *     path="/logout",
+     *     path="/api/v1/logout",
      *     summary="Logout user and invalidate token",
-     *     tags={"Authentication"},
+     *     tags={"Auth"},
      *     security={{"sanctum": {}}},
      *     @OA\Response(
      *         response=200,
