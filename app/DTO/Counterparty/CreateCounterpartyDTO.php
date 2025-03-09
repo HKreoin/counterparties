@@ -9,7 +9,7 @@ use Spatie\LaravelData\Attributes\Validation\Required;
 class CreateCounterpartyDTO extends Data
 {
     public function __construct(
-        #[Required, DigitsBetween(10, 12), Unique('counterparties', 'inn')]
+        #[Required, DigitsBetween(10, 12)]
         public int $inn,
     ) {
     }
