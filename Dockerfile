@@ -24,13 +24,5 @@ WORKDIR /var/www
 # Копирование кода приложения
 COPY . .
 
-# Установка зависимостей с помощью Composer и npm
-RUN composer install && \
-    npm install
-
-# Настройка прав доступа
-RUN mkdir -p /var/www/storage /var/www/bootstrap/cache && \
-    chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
-
 EXPOSE 9000
 CMD ["php-fpm"]
