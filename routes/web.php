@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Route;
 // Auth routes
 Route::get('/', function () {
     return Inertia\Inertia::render('Welcome', []);
-});
+})->name('welcome');
 
 Route::middleware('guest')->group(function () {
     Route::get('/register', [AuthController::class, 'registerForm'])->name('register');
