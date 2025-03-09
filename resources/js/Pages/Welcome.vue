@@ -18,6 +18,13 @@ import { Button } from '@/components/ui/button/index.js'
         <a :href="route('register')" class="underline"> Зарегистрироваться </a>
       </div>
       <Link
+        :href="route('counterparties.index')"
+        class="w-full mt-2"
+        as="button"
+      >
+        <Button>Список контрагентов</Button>
+      </Link>
+      <Link
         :href="route('logout')"
         method="post"
         class="w-full mt-2"

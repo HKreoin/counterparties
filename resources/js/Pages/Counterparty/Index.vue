@@ -43,7 +43,7 @@ watch(
 
 <template>
   <div
-    v-if="_.isEmpty(counterparties['data'])"
+    v-if="_.isEmpty(counterparties['data']) && search === ''"
     class="flex h-screen items-center"
   >
     <div class="text-center mx-auto">
@@ -67,7 +67,10 @@ watch(
       >
       <div>
         <a :href="route('counterparties.create')">
-          <Button> Добавить </Button>
+          <Button class="m-2"> Добавить </Button>
+        </a>
+        <a :href="route('welcome')">
+          <Button class="m-2"> На главную </Button>
         </a>
       </div>
     </div>
@@ -87,10 +90,10 @@ watch(
         </div>
       </ComboboxAnchor>
     </Combobox>
-    <div class="rounded-md border mt-4">
+    <div class="rounded-md border mt-4 overflow-x-auto">
       <Table>
         <TableHeader>
-          <TableRow class="grid grid-cols-4">
+          <TableRow class="md:grid md:grid-cols-4">
             <TableHead class="content-around"> ИНН </TableHead>
             <TableHead class="content-around"> Наименование </TableHead>
             <TableHead class="content-around"> ОГРН </TableHead>
@@ -101,7 +104,7 @@ watch(
           <TableRow
             v-for="counterparty in counterparties.data"
             :key="counterparty.id"
-            class="grid grid-cols-4"
+            class="md:grid md:grid-cols-4"
           >
             <TableCell>{{ counterparty.inn }}</TableCell>
             <TableCell>{{ counterparty.name }}</TableCell>
