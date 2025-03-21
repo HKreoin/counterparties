@@ -1,5 +1,9 @@
 # Приложение для внесения контрагентов в справочник
 
+## Техническое задание
+
+https://github.com/HKreoin/counterparties/blob/main/task_description.md
+
 ## Задеплоенный сайт
 
 https://khabdev.site/
